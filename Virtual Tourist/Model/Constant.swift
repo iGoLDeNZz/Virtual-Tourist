@@ -31,5 +31,3 @@ struct Constant {
     static let reuserID = "albumCell"
     
 }
-
-// https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=f441f05f6a02d961bbf1a05e15f85c14&lat=1&lon=1&extras=url_m&per_page=12&page=1&format=json&nojsoncallback=1

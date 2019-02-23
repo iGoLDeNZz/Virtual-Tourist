@@ -19,12 +19,20 @@ struct Client {
             switch response.result {
             case .success(let value):
                 
-                let result = (value as! [String:Any])["photos"] as! [String:Any]
-                let photos = result["photo"] as! [[String:Any]]
-                
-                getArrayOfImageURL(photos: photos, complitionHandler: { (urls) in
-                    complitionHandler(urls)
-                })
+                if let result = (value as! [String:Any])["photos"] as? [String:Any]{
+                    let photos = result["photo"] as! [[String:Any]]
+                    
+                    getArrayOfImageURL(photos: photos, complitionHandler: { (urls) in
+                        complitionHandler(urls)
+                    })
+                }
+                else{
+                    guard let stat = (value as! [String:Any])["stat"] as? String else {return}
+                    if stat == "fail"{
+                        guard let message = (value as! [String:Any])["message"] as? String else { return }
+                        showAlert(errorContent: message, title: "Error", target: invoker)
+                    }
+                }
                 
             case .failure(let error):
                 showAlert(errorContent: error.localizedDescription, title: "Error", target: invoker)
